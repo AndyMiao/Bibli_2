@@ -44,11 +44,11 @@ void forward() //move forward
   //motor left
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  analogWrite(enA, 220);
+  analogWrite(enA, 254);
   //motor right
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  analogWrite(enB, 220);
+  analogWrite(enB, 254);
 }
 
 void left() //turn left
@@ -56,11 +56,11 @@ void left() //turn left
   //motor left
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
-  analogWrite(enA, 130);
+  analogWrite(enA, 220);
   //motor right
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  analogWrite(enB, 130);
+  analogWrite(enB, 220);
 }
 
 void right() //turn right
@@ -68,11 +68,11 @@ void right() //turn right
   //motor left
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  analogWrite(enA, 130);
+  analogWrite(enA, 220);
   //motor right
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  analogWrite(enB, 130);
+  analogWrite(enB, 220);
 }
 
 void back() //reverse
@@ -80,11 +80,11 @@ void back() //reverse
   //motor left
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
-  analogWrite(enA, 140);
+  analogWrite(enA, 254);
   //motor right
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  analogWrite(enB, 140);
+  analogWrite(enB, 254);
 }
 
 void stopmove() //stop move
@@ -113,7 +113,7 @@ void auto_drive()
   uint16_t value = analogRead(ir);
   double ds = get_ir(value);
   Serial.println(value);
-  if(ds>=15){
+  if(ds>=13){
     forward();
   }
   else{
@@ -125,7 +125,7 @@ void auto_drive()
   value = analogRead(ir);  
   ds = get_ir(value);
   Serial.println(value);
-  if(ds>=15){
+  if(ds>=13){
     forward();
   }
   else{
@@ -138,7 +138,7 @@ void auto_drive()
   value = analogRead(ir);  
   ds = get_ir(value);
   Serial.println(value);
-  if(ds>=15){
+  if(ds>=13){
     forward();
   }
   else{

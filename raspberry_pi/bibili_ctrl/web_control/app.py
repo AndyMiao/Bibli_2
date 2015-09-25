@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response
 import base
+import play_video
 import time
 
 
@@ -13,6 +14,7 @@ from camera_pi import Camera
 app = Flask(__name__)
 
 movedir = base.MoveCtrl()
+movie_1 = play_video.Play_vdo()
 #pan =servo.ServoController(25)
 #pan.setAngle(0)
 
@@ -61,9 +63,21 @@ def moveon(direction):
 
 	elif direction =='v':
 		movedir.move('v')
-		
+	elif direction == 'p':
+		movie_1.play()
+	elif direction == 'o':
+		movie_1.stop_play()
 			
 	return direction
-	
+
+@app.route("/<movie>")
+def play_movie(movie):
+	print movie 
+	if movie == 'p':
+		movie_1.play()
+	elif movie == 'o':
+		movie_1.stop_play()
+	return movie 
+
 if __name__ == '__main__':
-	app.run(host='10.0.0.11', threaded=True)
+	app.run(host='192.168.1.137', threaded=True)

@@ -1,15 +1,70 @@
+
+
+
 <html>
   <head>
-    <title>ToffeeBot</title>
+  	<meta charset="UTF-8">
+    <title>Bibli Control Panel</title>    
+<!--
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+-->
+	<script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>	
+	
 	<script language="javascript" type="text/javascript">
+		var keyevent = [99,99];
 		function Button_onclick(direction) {
 			$.ajax({ url: '/' + direction });
+		}	
+
+		function Button_movie(movie) {
+			$.ajax({ url: '/' + movie });
+		}	
+
+
+		document.onkeydown = function(){key_down()};
+		document.onkeyup = function(){key_up()};
+
+		function key_down(){
+			keyevent[0] = keyevent[1];
+			keyevent[1] = event.keyCode;
+			//console.log(keyevent);
+			if (keyevent[0] != keyevent[1]){
+				//console.log('different');
+			if (event.keyCode==87) 
+				{Button_onclick('f')}
+			else if (event.keyCode==65)
+				{Button_onclick('l')}
+			else if (event.keyCode==68)
+				{Button_onclick('r')}
+			else if (event.keyCode==83)
+				{Button_onclick('b')}
+			else if (event.keyCode==69)
+				{Button_onclick('s')}
+			else if (event.keyCode==86)
+				{Button_onclick('v')}
+		}
+		}
+
+		function key_up(){
+			//console.log(event.keyCode);
+			keyevent = [99,99];
+			if (event.keyCode==87) 
+				{Button_onclick('s')}
+			else if (event.keyCode==65)
+				{Button_onclick('s')}
+			else if (event.keyCode==68)
+				{Button_onclick('s')}
+			else if (event.keyCode==83)
+				{Button_onclick('s')}
+			else if (event.keyCode==69)
+				{Button_onclick('s')}
+			else if (event.keyCode==86)
+				{Button_onclick('v')}
 		}
 	</script>  
   </head>
 	<body>
-		<h1>ToffeeBot</h1>
+		<h1>Bibli Control</h1>
 		<img src="{{ url_for('video_feed') }}">
 		<table>
 			<tr>
@@ -22,32 +77,32 @@
 			</tr>
 			<tr>
 				<td colspan="3" style="text-align: center">
-					<input id="btnUp" type="button" value="Forward" onclick="Button_onclick('f')" />
+					<input id="btnUp" type="button" value="Forward" accesskey="w" onclick="Button_onclick('f')" />
 				</td>
 				<td colspan="2" style="text-align: center">
-					<input id="btnFwd" type="button" value="AutoDrive" onclick="Button_onclick('v')" />
+					<input id="btnFwd" type="button" value="AutoDrive" accesskey="v" onclick="Button_onclick('v')" />
 				</td>
 			</tr>
 			<tr>
 				<td style="text-align: center">
-					<input id="btnLeft" type="button" value="Left" onclick="Button_onclick('l')" />
+					<input id="btnLeft" type="button" value="Left" accesskey="a" onclick="Button_onclick('l')" />
 				</td>
 				<td style="text-align: center">
-					<input id="btnCtr" type="button" value="Stop" onclick="Button_onclick('s')" />
+					<input id="btnCtr" type="button" value="Stop" accesskey="e" onclick="Button_onclick('s')" />
 				</td>
 				<td style="text-align: center">
-					<input id="btnRight" type="button" value="Right" onclick="Button_onclick('r')" />
+					<input id="btnRight" type="button" value="Right" accesskey="d" onclick="Button_onclick('r')" />
 				</td>
 				<td style="text-align: center">
-					<input id="btnMLeft" type="button" value="NA" onclick="Button_onclick('left')" />
+					<input id="btnMLeft" type="button" value="Video_play" onclick="Button_onclick('p')" />
 				</td>
 				<td style="text-align: center">
-					<input id="btnMRight" type="button" value="NA" onclick="Button_onclick('right')" />
+					<input id="btnMRight" type="button" value="Video_pause" onclick="Button_onclick('o')" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan="3" style="text-align: center">
-					<input id="btnDown" type="button" value="Reverse" onclick="Button_onclick('b')" />
+					<input id="btnDown" type="button" value="Reverse" accesskey="s" onclick="Button_onclick('b')" />
 				</td>
 				<td colspan="2" style="text-align: center">
 					<input id="btnRev" type="button" value="NA" onclick="Button_onclick('reverse')" />

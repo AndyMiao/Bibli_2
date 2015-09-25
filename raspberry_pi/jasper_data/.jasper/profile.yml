@@ -1,0 +1,11 @@
+carrier: ''
+first_name: Lucky
+gmail_password: ''
+location: '80302'
+phone_number: ''
+prefers_email: true
+stt_engine: witai
+witai-stt:
+  access_token: 2WTCLAYOC4FYDGQU5QMMWOGSOKRNQC5R
+
+tts_engine: google-tts
