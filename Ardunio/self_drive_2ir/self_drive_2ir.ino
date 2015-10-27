@@ -8,7 +8,8 @@ int enB = 10;
 int in3 = 8;
 int in4 = 9;
 //ir sensor
-#define ir A1
+#define Lir A1
+#define Rir A2
 char cmd = 's';
 
 
@@ -23,21 +24,35 @@ void setup()
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
   // initialize digital pin 13 as an output.
-  pinMode(ir, INPUT);
-  pinMode(13, OUTPUT);
+  pinMode(Lir, INPUT);
+  pinMode(Rir, INPUT);
 }
-
-void blink(){
-  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);              // wait for a second
-  digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);              // wait for a second
- }
 
 double get_ir(uint16_t value){
   if(value<16) value = 16; 
   return 2076.0/(value-11.0); 
   }
+
+int is_obs(){
+  uint16_t value_l = analogRead(Lir);
+  double ds_l = get_ir(value_l);
+  uint16_t value_r = analogRead(Rir);
+  double ds_r = get_ir(value_r);  
+  if (ds_l>=20 && ds_r>=20){
+    return 0;
+  }//no obstacle  
+  else if (ds_l>=20 && ds_r<20){
+    return 1;
+  }//obstacle at right  
+  else if (ds_l<20 && ds_r>=20){
+    return 2;
+  }//obstacle at left
+  else if (ds_l<20 && ds_r<20){
+    return 3;
+  }//obstacle at both side
+}
+
+
 
 void forward() //move forward
 {
@@ -56,11 +71,11 @@ void right() //turn left
   //motor left
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
-  analogWrite(enA, 200);
+  analogWrite(enA, 254);
   //motor right
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  analogWrite(enB, 200);
+  analogWrite(enB, 254);
 }
 
 void left() //turn right
@@ -68,11 +83,11 @@ void left() //turn right
   //motor left
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  analogWrite(enA, 200);
+  analogWrite(enA, 254);
   //motor right
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  analogWrite(enB, 200);
+  analogWrite(enB, 254);
 }
 
 void back() //reverse
@@ -110,43 +125,29 @@ stopmove();
 
 void auto_drive()
 {
-  uint16_t value = analogRead(ir);
-  double ds = get_ir(value);
-  Serial.println(value);
-  if(ds>=13){
+  int obs = is_obs();
+  if(obs==0){
     forward();
+    Serial.println("no obstacle");
   }
-  else{
-    left();
-    delay(200);
+  else if (obs==1){
     stopmove();
-    Serial.println("obstacle1");
-    }
-  value = analogRead(ir);  
-  ds = get_ir(value);
-  Serial.println(value);
-  if(ds>=13){
-    forward();
+    left();
+    delay(400);
+    Serial.println("right obstacle");
   }
-  else{
+  else if (obs==2){
+    stopmove();
     right();
     delay(400);
-    stopmove();
-    Serial.println("obstacle2");
-    }
-
-  value = analogRead(ir);  
-  ds = get_ir(value);
-  Serial.println(value);
-  if(ds>=13){
-    forward();
+    Serial.println("left obstacle");
   }
-  else{
-    right();
-    delay(200);
-    Serial.println("obstacle3");
-    forward();
-    }  
+  else if (obs==3){
+    stopmove();
+    left();
+    delay(1000);
+    Serial.println("is that a wall?");
+  }
 }
 
 

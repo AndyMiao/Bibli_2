@@ -1,6 +1,6 @@
 import re
 
-WORDS=["THANK YOU""THANKS"]
+WORDS=["THANK YOU","THANKS"]
 
 def handle(text, mic, profile):
 	mic.say("you are wellcome.")

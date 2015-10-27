@@ -3,7 +3,7 @@ import re
 WORDS=["INTRODUCE"]
 
 def handle(text, mic, profile):
-	mic.say("Hi, my name is Lucky, I am a robot, The second generation of Bibli, I was produced by Robauto. designed by Jalali, Qi, and Wei.")
+	mic.say("Hi, I am Bibli, The second generation of Bibli robot, the fist generation works in Longmont Library, we are produced by Robauto. designed by Jalali, Qi, and Wei.")
 
 def isValid(text):
     """

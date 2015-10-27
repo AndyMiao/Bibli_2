@@ -103,15 +103,16 @@ class Jasper(object):
 
         # Initialize Mic
         self.mic = Mic(tts_engine_class.get_instance(),
-                       stt_passive_engine_class.get_passive_instance(),
+                       #stt_passive_engine_class.get_passive_instance(),
+                       stt.PocketSphinxSTT.get_passive_instance(),
                        stt_engine_class.get_active_instance())
 
     def run(self):
         if 'first_name' in self.config:
-            salutation = ("Hi, I am Bibli robot, my name is %s?"
-                          % self.config["first_name"])
+            salutation = ("Hi, I am Bibli robot, my name is Lucky!") # %s?"
+                         # % self.config["first_name"])
         else:
-            salutation = "How can I be of service?"
+            salutation = "Hi, I am Bibli robot, my name is Lucky"
         self.mic.say(salutation)
 
         conversation = Conversation("LUCKY", self.mic, self.config)
