@@ -86,7 +86,7 @@ def play_movie(movie):
 def saymsg(msg):
 	print msg
 	msgquote= '"{}"'.format(msg)
-	subprocess.call('espeak -ven+f3 '+ msgquote, shell=True)
+	subprocess.call('espeak -ven+f3 -a200 '+ msgquote, shell=True)
 	
 
 if __name__ == '__main__':
